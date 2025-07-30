@@ -1,7 +1,11 @@
+import { Flex } from "@chakra-ui/react";
+
+
 export default function Home() {
   return (
-    <div>
-      Hello World!
-    </div>
+  <Flex w="100vw" h="100vh">
+
+
+  </Flex>
   )
 }
