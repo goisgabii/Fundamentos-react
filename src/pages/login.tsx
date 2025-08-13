@@ -28,8 +28,8 @@ export default function Login() {
       console.log(data);
       updateUser({id:"teste",
         email: data.email,
-        cpf: "10680732926",
-        fullName: "Henrique Junkes",
+        cpf: "09414525741",
+        fullName: "GOIS",
         avatarUrl: "https://avatars.githubusercontent.com/u/6463742?v=4"})
     }
 
