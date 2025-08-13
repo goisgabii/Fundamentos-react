@@ -1,11 +1,14 @@
+
 import {Button, Link as ChakraLink, Field, Flex, Heading, HStack, Image, Input, Stack, Text, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
-<Image src="/assets/login-image.gif"  />
+import loginImage from "../../public/assets/login-image.gif";
 import { Checkbox } from "@/components/ui/checkbox";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useForm } from "react-hook-form";
 import z, { email } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "@/contexts/SessionContext";
+import { useEffect } from "react";
 
 const signInFormSchema = z.object({
   email: z.email("O e-mail é obrigatório").nonempty("Digite um e-mail válido"),
@@ -15,15 +18,29 @@ const signInFormSchema = z.object({
 type SignInFormData = z.infer<typeof signInFormSchema>;
 
 export default function Login() {
+    const { user , updateUser} = useSession();
 
     const { register, handleSubmit, formState: {errors} } = useForm({
       resolver: zodResolver(signInFormSchema)
     });
 
+    function handleSignIn(data: SignInFormData){
+      console.log(data);
+      updateUser({id:"teste",
+        email: data.email,
+        cpf: "10680732926",
+        fullName: "Henrique Junkes",
+        avatarUrl: "https://avatars.githubusercontent.com/u/6463742?v=4"})
+    }
+
+    useEffect(() => {
+      console.log(user);
+    }, [user])
+
     return (
         <Flex w="100vw" h="100vh">
           <Flex w="50%" bg="#2C73EB" align={"center"} justify={"center"}>
-            <Image w={500} h={500} src="/assets/logo.gif" alt="Login image"  />
+            <Image w={500} h={500} src={loginImage.src} />
           </Flex>
           <VStack w="50%" justify="center">
             <Stack>
@@ -31,7 +48,7 @@ export default function Login() {
 
               <Text color="gray.400" fontWeight="normal" fontSize="lg">Se você já é membro, você pode fazer login com seu endereço de e-mail e senha.</Text>
 
-            
+
           <form onSubmit={handleSubmit(handleSignIn)}>
             <VStack align="flex-start" gap={6} mt={10}>
               <Field.Root invalid={!!errors.email}>
